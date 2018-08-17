@@ -15,7 +15,7 @@ namespace zanguimp
     public partial class Form1 : Form
     {
         DataTable excelDt = null;
-        string connStr = @"Data Source = u8testserver; Initial Catalog = UFDATA_003_2016; User ID = sa; Password=jiwu@2017";
+        string connStr = @"Data Source = 192.168.1.15; Initial Catalog = UFDATA_003_2016; User ID = sa; Password=jiwu@2017";
         Dictionary<string, string> autoidList = new Dictionary<string, string>();
         public Form1()
         {

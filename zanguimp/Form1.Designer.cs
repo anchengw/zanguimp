@@ -32,9 +32,9 @@
             this.openExcel = new System.Windows.Forms.Button();
             this.impU8 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.清除日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +70,20 @@
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.清除日志ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 26);
+            // 
+            // 清除日志ToolStripMenuItem
+            // 
+            this.清除日志ToolStripMenuItem.Name = "清除日志ToolStripMenuItem";
+            this.清除日志ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.清除日志ToolStripMenuItem.Text = "清除日志";
+            this.清除日志ToolStripMenuItem.Click += new System.EventHandler(this.清除日志ToolStripMenuItem_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -78,20 +92,6 @@
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 3;
             this.label1.Text = "导入状态：";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.清除日志ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
-            // 
-            // 清除日志ToolStripMenuItem
-            // 
-            this.清除日志ToolStripMenuItem.Name = "清除日志ToolStripMenuItem";
-            this.清除日志ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.清除日志ToolStripMenuItem.Text = "清除日志";
-            this.清除日志ToolStripMenuItem.Click += new System.EventHandler(this.清除日志ToolStripMenuItem_Click);
             // 
             // Form1
             // 

@@ -7,6 +7,7 @@ using NPOI.XSSF.UserModel;
 using System.Data;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace NPOIExcelOpa
 {
@@ -186,6 +187,41 @@ namespace NPOIExcelOpa
                 System.IO.Directory.CreateDirectory(path);//不存在就创建目录 
             }
         }
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
+        /// <summary>
+        /// 结束EXCEL进程 最好的方法
+        /// </summary>
+        /// <param name="excel"></param>
+        public static void Kill(Excel.Application excel)
+        {
+            try
+            {
+                IntPtr t = new IntPtr(excel.Hwnd);   //得到这个句柄，具体作用是得到这块内存入口 
+                int k = 0;
+                GetWindowThreadProcessId(t, out k);   //得到本进程唯一标志k
+                System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById(k);   //得到对进程k的引用
+                p.Kill();     //关闭进程k
+            }
+            catch
+            { }
+        }
+        /// <summary>
+        /// 另一种结束EXCEL进程的方法
+        /// </summary>
+        /// <param name="o"></param>
+        private static void NAR(object o)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(o);
+            }
+            catch { }
+            finally
+            {
+                o = null;
+            }
+        }
         /// <summary>
         /// 另存为2003格式的EXCEL
         /// </summary>
@@ -206,21 +242,32 @@ namespace NPOIExcelOpa
             }
             else
             {
-                myExcel.Visible = false;
-                myExcel.UserControl = true;
-                //以只读的形式打开EXCEL文件
-                Excel.Workbook myBook = myExcel.Application.Workbooks.Open(excelFile, missing, true, missing, missing, missing,
-                     missing, missing, missing, true, missing, missing, missing, missing, missing);
-                myBook.SaveAs(excelFullName, Excel.XlFileFormat.xlExcel8, null, null, false, false, Excel.XlSaveAsAccessMode.xlNoChange, null, null, null, null, null);
-                myExcel.Quit();  //退出Excel文件
-                myExcel = null;
+                try
+                {
+                    myExcel.Visible = false;
+                    myExcel.UserControl = true;
+                    //以只读的形式打开EXCEL文件
+                    Excel.Workbook myBook = myExcel.Application.Workbooks.Open(excelFile, missing, true, missing, missing, missing,
+                         missing, missing, missing, true, missing, missing, missing, missing, missing);
+                    myBook.SaveAs(excelFullName, Excel.XlFileFormat.xlExcel8, null, null, false, false, Excel.XlSaveAsAccessMode.xlNoChange, null, null, null, null, null);
+                    myBook.Close();
+                    myExcel.Quit();  //退出Excel文件
+                }
+                finally
+                {
+                    Kill(myExcel);
+                    myExcel = null;
+                    //NAR(myExcel);
+                    GC.Collect();
+                    System.Threading.Thread.Sleep(100);//等待进程退出，否则会出现文件正在被另一进程访问的错误
+                }
+                /*
                 System.Diagnostics.Process[] procs = System.Diagnostics.Process.GetProcessesByName("excel");
                 foreach (System.Diagnostics.Process pro in procs)
                 {
                     pro.Kill();//杀掉进程
                 }
-                System.Threading.Thread.Sleep(100);//等待进程退出，否则会出现文件正在被另一进程访问的错误
-                GC.Collect();
+                */
             }
             return excelFullName;
         }

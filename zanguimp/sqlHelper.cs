@@ -16,7 +16,7 @@ namespace Sqlhelper //可以修改成实际项目的命名空间名称
     {
         //数据库连接字符串(web.config来配置)
         //<add key="ConnectionString" value="server=127.0.0.1;database=DATABASE;uid=sa;pwd=" />  
-        private static string connectionString = @"Data Source=u8testserver;Initial Catalog = UFDATA_003_2016; User ID = sa; Password=jiwu@2017";
+        private static string connectionString = @"Data Source=192.168.1.15;Initial Catalog = UFDATA_003_2016; User ID = sa; Password=jiwu@2017";
         public static void setConnectStr(string conn)
         {
             if (!string.IsNullOrEmpty(conn))
