@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace zanguimp
+namespace RichTextLog
 {
     public class LogRichTextBox
     {
@@ -23,7 +23,7 @@ namespace zanguimp
             {
                 richTextBoxRemote.AppendText("\n");
                 richTextBoxRemote.AppendText("\n");
-                richTextBoxRemote.AppendText("❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆");
+                richTextBoxRemote.AppendText("❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆❆");
                 richTextBoxRemote.AppendText("\n");
                 richTextBoxRemote.AppendText("\n");
             }
