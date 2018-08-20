@@ -15,7 +15,7 @@ namespace zanguimp
     public partial class Form1 : Form
     {
         DataTable excelDt = null;
-        string connStr = @"Data Source = 192.168.1.15; Initial Catalog = UFDATA_003_2016; User ID = sa; Password=jiwu@2017";
+        string connStr = @"Data Source = 192.168.1.15; Initial Catalog = UFDATA_003_2016; User ID = sa; Password=knfz@2013";
         Dictionary<string, string> autoidList = new Dictionary<string, string>();
         public Form1()
         {
@@ -32,9 +32,9 @@ namespace zanguimp
                 int i = 1;
                 foreach (DataRow dr in excelDt.Rows)
                 {
-                    if (string.IsNullOrEmpty(dr["单价"].ToString()) || string.IsNullOrEmpty(dr["数量"].ToString()) || string.IsNullOrEmpty(dr["单据号"].ToString()) || string.IsNullOrEmpty(dr["存货编码"].ToString()))
+                    if (string.IsNullOrEmpty(dr["金额"].ToString()) || string.IsNullOrEmpty(dr["数量"].ToString()) || string.IsNullOrEmpty(dr["单据号"].ToString()) || string.IsNullOrEmpty(dr["存货编码"].ToString()))
                     {
-                        LogRichTextBox.logMesg("第" + i.ToString() + "行记录的单据号、存货编码、单价和数量等关键列不能为空！数据完整性检查失败！请核对要导入的EXCEL文件。", 1);
+                        LogRichTextBox.logMesg("第" + i.ToString() + "行记录的单据号、存货编码、金额和数量等关键列不能为空！数据完整性检查失败！请核对要导入的EXCEL文件。", 1);
                         return false;
                     }
                     i++;
@@ -54,7 +54,8 @@ namespace zanguimp
         public void commitDatabase()
         {
             string autoid = "";
-            Double price, jine, num;
+            Double jine, num;
+            string price = "";
             autoidList.Clear();
 
             foreach (DataRow dr in excelDt.Rows)
@@ -64,9 +65,9 @@ namespace zanguimp
 
                 sqlstr = string.Format(sqlstr, dr["单据号"].ToString(), dr["存货编码"].ToString());
                 autoid = (Sqlhelper.DbHelperSQL.GetSingle(sqlstr)).ToString();
-                price = Convert.ToDouble(dr["单价"]);
                 num = Convert.ToDouble(dr["数量"]);
-                jine = price * num;
+                jine = Convert.ToDouble(dr["金额"]);
+                price = (jine / num).ToString("f10"); //0.3200000000
                 if (string.IsNullOrEmpty(autoid))
                 {
                     throw new Exception("获取U8系统的AUTOID失败！导入终止！请稍后尝试或联系系统工程师解决此问题！");
