@@ -73,7 +73,7 @@ namespace zanguimp
                     throw new Exception("获取U8系统的AUTOID失败！导入终止！请稍后尝试或联系系统工程师解决此问题！");
                 }
                 upsql = string.Format(upsql, price, jine, autoid);
-                autoidList.Add(autoid, upsql);
+                autoidList[autoid]= upsql;
             }
             if (autoidList.Count == 0)
                 throw new Exception("SQL语句字典为空！");
