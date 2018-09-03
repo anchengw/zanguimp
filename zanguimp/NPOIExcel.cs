@@ -61,9 +61,15 @@ namespace NPOIExcelOpa
                         IRow ir = sheet.GetRow(i);
                         for (int j = cfirst; j < clast; j++)
                         {
-                            if (ir.GetCell(j) != null)
+                            ICell cell = evaluator.EvaluateInCell(ir.GetCell(j));
+                            if (cell != null)
                             {
-                                r[j] = ir.GetCell(j).ToString();
+                                //if (cell.CellType == CellType.Formula)
+                                //{
+                                //    r[j] = cell.NumericCellValue.ToString();//cell.NumericCellValue取包括公式的值 IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook); cell = e.EvaluateInCell(cell);
+                               // }
+                                //else
+                                    r[j] = ir.GetCell(j).ToString();
                             }
                         }
                         dt.Rows.Add(r);
@@ -80,7 +86,6 @@ namespace NPOIExcelOpa
                 throw (ex);//System.Windows.Forms.MessageBox.Show("Excel格式错误或者Excel正由另一进程在访问");
             }
         }
-
         /// <summary>
         /// 判断文件格式
         /// </summary>
